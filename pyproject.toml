@@ -1,0 +1,41 @@
+[project]
+name = "app"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Your Name",email = "you@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "jupyter (>=1.1.1,<2.0.0)",
+    "matplotlib (>=3.10.1,<4.0.0)",
+]
+
+[tool.poetry]
+
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
+flake8 = "^7.1.2"
+isort = "^6.0.1"
+mypy = "^1.15.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+# addopts = "--cov=src --cov-config=.coveragerc --cov-report=html"
+testpaths = ["tests"]
+
+[tool.black]
+line-length = 79
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+ignore_missing_imports = true
+disallow_untyped_defs = true
+
+# Flake8 cannot be configured via pyproject.toml
