@@ -340,6 +340,58 @@ def _how_to_combine_data_from_multiple_tables() -> None:
     print(employees_with_department.head())
 
 
+def _how_to_handle_time_series_data_with_ease() -> None:
+    """
+    # REMEMBER
+    * Valid date strings can be converted to datetime objects
+      using to_datetime function or as part of read functions.
+    * Datetime objects in pandas support calculations, logical operations
+      and convenient date-related properties using the dt accessor.
+    * A DatetimeIndex contains these date-related properties
+      and supports convenient slicing.
+    * Resample is a powerful method to change the frequency of a time series.
+    """
+    air_quality = pd.read_csv(_AIR_QUALITY_NO2_LONG_CSV_PATH)
+    air_quality = air_quality.rename(columns={"date.utc": "datetime"})
+    print(air_quality.head())
+
+    air_quality["datetime"] = pd.to_datetime(air_quality["datetime"])
+    print(air_quality["datetime"])
+    print(air_quality["datetime"].min(), air_quality["datetime"].max())
+
+    air_quality["month"] = air_quality["datetime"].dt.month
+    print(air_quality.head())
+
+    print(
+        air_quality.groupby([air_quality["datetime"].dt.weekday, "location"])[
+            "value"
+        ].mean()
+    )
+
+    fig, axs = plt.subplots(figsize=(12, 4))
+    air_quality.groupby(air_quality["datetime"].dt.hour)["value"].mean().plot(
+        kind="bar", rot=0, ax=axs
+    )
+    plt.xlabel("Hour of the day")
+    plt.ylabel("$NO_2 (µg/m^3)$")
+    plt.show()
+
+    no_2 = air_quality.pivot(
+        index="datetime", columns="location", values="value"
+    )
+    print(no_2.head())
+    print(no_2.index.year, no_2.index.weekday)
+
+    no_2.loc["2019-05-20":"2019-05-21"].plot()  # type: ignore[misc]
+    plt.show()
+
+    monthly_max = no_2.resample("ME").max()
+    print(monthly_max)
+    print(monthly_max.index.freq)
+    no_2.resample("D").mean().plot(style="-o", figsize=(10, 5))
+    plt.show()
+
+
 def main() -> None:
     # _what_kind_of_data_does_pandas_handle()
     # _how_do_I_read_and_write_tabular_data()
@@ -348,7 +400,8 @@ def main() -> None:
     # _how_to_create_new_columns_derived_from_existing_columns()
     # _how_to_calculate_summary_statistics()
     # _how_to_reshape_the_layout_of_tables()
-    _how_to_combine_data_from_multiple_tables()
+    # _how_to_combine_data_from_multiple_tables()
+    _how_to_handle_time_series_data_with_ease()
 
 
 if __name__ == "__main__":

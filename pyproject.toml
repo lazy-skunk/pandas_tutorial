@@ -25,10 +25,6 @@ mypy = "^1.15.0"
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.pytest.ini_options]
-# addopts = "--cov=src --cov-config=.coveragerc --cov-report=html"
-testpaths = ["tests"]
-
 [tool.black]
 line-length = 79
 
