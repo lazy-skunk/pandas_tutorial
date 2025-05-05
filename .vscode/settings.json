@@ -21,15 +21,12 @@
         "--settings-path=pyproject.toml"
     ],
     "python.analysis.include": [
-        "notebooks/**/*",
-        "scripts/**/*",
         "src/**/*",
-        "tests/**/*",
     ],
     "python.analysis.exclude": [
         "**/__pycache__",
         "**/.ipynb_checkpoints",
-        "**/leetcode.egg-info",
+        "**/*.egg-info",
     ],
     "files.exclude": {
         "**/.git": true,
