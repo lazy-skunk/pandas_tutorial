@@ -392,6 +392,30 @@ def _how_to_handle_time_series_data_with_ease() -> None:
     plt.show()
 
 
+def _how_to_manipulate_textual_data() -> None:
+    """
+    # REMEMBER
+    * String methods are available using the str accessor.
+    * String methods work element-wise
+      and can be used for conditional indexing.
+    * The replace method is a convenient method to convert values
+      according to a given dictionary.
+    """
+    titanic = pd.read_csv(_TITANIC_CSV_PATH)
+    print(titanic.head())
+    print(titanic["Name"].str.lower())
+    print(titanic["Name"].str.split(","))
+    titanic["Surname"] = titanic["Name"].str.split(",").str.get(0)
+    print(titanic["Surname"])
+    print(titanic["Name"].str.contains("Countess"))
+    print(titanic[titanic["Name"].str.contains("Countess")])
+    print(titanic["Name"].str.len())
+    print(titanic["Name"].str.len().idxmax())
+    print(titanic.loc[titanic["Name"].str.len().idxmax(), "Name"])
+    titanic["Sex_short"] = titanic["Sex"].replace({"male": "M", "female": "F"})
+    print(titanic["Sex_short"])
+
+
 def main() -> None:
     # _what_kind_of_data_does_pandas_handle()
     # _how_do_I_read_and_write_tabular_data()
@@ -401,7 +425,8 @@ def main() -> None:
     # _how_to_calculate_summary_statistics()
     # _how_to_reshape_the_layout_of_tables()
     # _how_to_combine_data_from_multiple_tables()
-    _how_to_handle_time_series_data_with_ease()
+    # _how_to_handle_time_series_data_with_ease()
+    _how_to_manipulate_textual_data()
 
 
 if __name__ == "__main__":
