@@ -6,12 +6,15 @@ import pandas as pd
 _ABSOLUTE_FILE_PATH = Path(__file__).resolve()
 _TUTORIAL_DIR = _ABSOLUTE_FILE_PATH.parent
 _DATA_DIR = _TUTORIAL_DIR / "data"
+
 _TITANIC_CSV_PATH = _DATA_DIR / "titanic.csv"
 _TITANIC_XLSX_PATH = _DATA_DIR / "titanic.xlsx"
+
 _AIR_QUALITY_NO2_CSV_PATH = _DATA_DIR / "air_quality_no2.csv"
 _AIR_QUALITY_LONG_CSV_PATH = _DATA_DIR / "air_quality_long.csv"
 _AIR_QUALITY_NO2_LONG_CSV_PATH = _DATA_DIR / "air_quality_no2_long.csv"
 _AIR_QUALITY_PM25_LONG_CSV_PATH = _DATA_DIR / "air_quality_pm25_long.csv"
+
 _EMPLOYEES_CSV_PATH = _DATA_DIR / "employees.csv"
 _DEPARTMENTS_CSV_PATH = _DATA_DIR / "departments.csv"
 
@@ -62,7 +65,7 @@ def _how_do_I_read_and_write_tabular_data() -> None:
     print(titanic_read_csv.dtypes)
 
     titanic_read_csv.to_excel(
-        _TITANIC_CSV_PATH, sheet_name="passengers", index=False
+        _TITANIC_XLSX_PATH, sheet_name="passengers", index=False
     )
     titanic_read_xlsx = pd.read_excel(
         _TITANIC_XLSX_PATH, sheet_name="passengers"
@@ -132,13 +135,10 @@ def _how_do_I_create_plots_in_pandas() -> None:
     )
     print(air_quality.head())
     air_quality.plot()
-    plt.show()
 
     air_quality["station_paris"].plot()
-    plt.show()
 
     air_quality.plot.scatter(x="station_london", y="station_paris", alpha=0.5)
-    plt.show()
 
     print(
         [
@@ -149,10 +149,8 @@ def _how_do_I_create_plots_in_pandas() -> None:
     )
 
     air_quality.plot.box()
-    plt.show()
 
     axs = air_quality.plot.area(figsize=(12, 4), subplots=True)
-    plt.show()
 
     fig, axs = plt.subplots(figsize=(12, 4))
     air_quality.plot.area(ax=axs)
@@ -252,7 +250,6 @@ def _how_to_reshape_the_layout_of_tables() -> None:
     print(no2.head())
 
     no2.pivot(columns="location", values="value").plot()
-    plt.show()
 
     print(
         air_quality.pivot_table(
@@ -286,6 +283,7 @@ def _how_to_reshape_the_layout_of_tables() -> None:
         var_name="id_location",
     )
     print(no_2.head())
+    plt.show()
 
 
 def _how_to_combine_data_from_multiple_tables() -> None:
@@ -373,7 +371,6 @@ def _how_to_handle_time_series_data_with_ease() -> None:
     )
     plt.xlabel("Hour of the day")
     plt.ylabel("$NO_2 (µg/m^3)$")
-    plt.show()
 
     no_2 = air_quality.pivot(
         index="datetime", columns="location", values="value"
@@ -382,7 +379,6 @@ def _how_to_handle_time_series_data_with_ease() -> None:
     print(no_2.index.year, no_2.index.weekday)
 
     no_2.loc["2019-05-20":"2019-05-21"].plot()  # type: ignore[misc]
-    plt.show()
 
     monthly_max = no_2.resample("ME").max()
     print(monthly_max)
@@ -416,16 +412,16 @@ def _how_to_manipulate_textual_data() -> None:
 
 
 def main() -> None:
-    # _what_kind_of_data_does_pandas_handle()
-    # _how_do_I_read_and_write_tabular_data()
-    # _how_do_I_select_a_subset_of_a_dataframe()
+    _what_kind_of_data_does_pandas_handle()
+    _how_do_I_read_and_write_tabular_data()
+    _how_do_I_select_a_subset_of_a_dataframe()
     _how_do_I_create_plots_in_pandas()
-    # _how_to_create_new_columns_derived_from_existing_columns()
-    # _how_to_calculate_summary_statistics()
-    # _how_to_reshape_the_layout_of_tables()
-    # _how_to_combine_data_from_multiple_tables()
-    # _how_to_handle_time_series_data_with_ease()
-    # _how_to_manipulate_textual_data()
+    _how_to_create_new_columns_derived_from_existing_columns()
+    _how_to_calculate_summary_statistics()
+    _how_to_reshape_the_layout_of_tables()
+    _how_to_combine_data_from_multiple_tables()
+    _how_to_handle_time_series_data_with_ease()
+    _how_to_manipulate_textual_data()
 
 
 if __name__ == "__main__":
