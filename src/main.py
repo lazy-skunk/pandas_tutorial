@@ -12,6 +12,8 @@ _AIR_QUALITY_NO2_CSV_PATH = _DATA_DIR / "air_quality_no2.csv"
 _AIR_QUALITY_LONG_CSV_PATH = _DATA_DIR / "air_quality_long.csv"
 _AIR_QUALITY_NO2_LONG_CSV_PATH = _DATA_DIR / "air_quality_no2_long.csv"
 _AIR_QUALITY_PM25_LONG_CSV_PATH = _DATA_DIR / "air_quality_pm25_long.csv"
+_EMPLOYEES_CSV_PATH = _DATA_DIR / "employees.csv"
+_DEPARTMENTS_CSV_PATH = _DATA_DIR / "departments.csv"
 
 
 def _what_kind_of_data_does_pandas_handle() -> None:
@@ -288,6 +290,12 @@ def _how_to_reshape_the_layout_of_tables() -> None:
 
 
 def _how_to_combine_data_from_multiple_tables() -> None:
+    """
+    # REMEMBER
+    * Multiple tables can be concatenated both column-wise
+      and row-wise using the concat function.
+    * For database-like merging/joining of tables, use the merge function.
+    """
     air_quality_no2 = pd.read_csv(
         _AIR_QUALITY_NO2_LONG_CSV_PATH, parse_dates=True
     )
@@ -319,6 +327,29 @@ def _how_to_combine_data_from_multiple_tables() -> None:
     )
     print(air_quality_.head())
 
+    employees = pd.read_csv(_EMPLOYEES_CSV_PATH, parse_dates=True)
+    departments = pd.read_csv(_DEPARTMENTS_CSV_PATH, parse_dates=True)
+    employees_with_department = pd.merge(
+        employees,
+        departments,
+        how="left",
+        left_on="department_id",
+        right_on="department_id",
+    )
+
+    print(employees_with_department.head())
+
+
+def main() -> None:
+    # _what_kind_of_data_does_pandas_handle()
+    # _how_do_I_read_and_write_tabular_data()
+    # _how_do_I_select_a_subset_of_a_dataframe()
+    # _how_do_I_create_plots_in_pandas()
+    # _how_to_create_new_columns_derived_from_existing_columns()
+    # _how_to_calculate_summary_statistics()
+    # _how_to_reshape_the_layout_of_tables()
+    _how_to_combine_data_from_multiple_tables()
+
 
 if __name__ == "__main__":
-    _how_to_combine_data_from_multiple_tables()
+    main()
